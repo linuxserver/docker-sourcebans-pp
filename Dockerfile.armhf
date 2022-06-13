@@ -40,7 +40,7 @@ RUN \
   echo "**** install sbpp ****" && \
   if [ -z ${SBPP_RELEASE+x} ]; then \
     SBPP_RELEASE=$(curl -sX GET "https://api.github.com/repos/sbpp/sourcebans-pp/releases/latest" \
-    | awk '/tag_name/{print $4;exit}' FS='[""]') \
+    | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   mkdir -p \
     /defaults/site && \
