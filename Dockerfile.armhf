@@ -43,7 +43,7 @@ RUN \
     | awk '/tag_name/{print $4;exit}' FS='[""]'); \
   fi && \
   mkdir -p \
-    /defaults/site && \
+    /app/sbpp && \
   curl -o \
     /tmp/sbpp.tar.gz -L \
     "https://github.com/sbpp/sourcebans-pp/releases/download/${SBPP_RELEASE}/sourcebans-pp-${SBPP_RELEASE}.webpanel-only.tar.gz" && \
