@@ -1,0 +1,40 @@
+#!/usr/bin/with-contenv bash
+
+# make our folders
+[[ ! -d /config/www ]] && \
+    mkdir -p /config/www
+
+# moving files
+[[ ! -f /config/www/index.php ]] && \
+    mv /app/sbpp/* /config/www/
+
+# copy config files
+[[ ! -f /config/www/config.php ]] && \
+    cp /config/www/config.php.template /config/www/config.php
+
+# Set permissions per upstream
+chmod 644 /config/www/config.php && \
+chmod 755 /config/www/demos && \
+chmod 775 /config/www/themes_c && \
+chmod 755 /config/www/images/games && \
+chmod 755 /config/www/images/maps 
+
+# ownership
+chown -R abc:abc \
+    /app \
+    /config 
+
+# If $REMOVE_SETUP_DIRS is set remove the install and updater directories if they exist
+# otherwise, assume fresh install or upgrade which will remove user customizations
+if [ "true" == "$REMOVE_SETUP_DIRS" ] || { [ -n "${INSTALL+x}" ] && [ "true" != "$INSTALL" ]; }; then
+    if [ -d /config/www/install/ ]; then
+        rm -R /config/www/install/ /app/sbpp/install/
+    fi
+    if [ -d /config/www/updater/ ]; then
+        rm -R /config/www/updater/ /app/sbpp/updater/
+    fi
+else
+    cp -r /app/sbpp/* /config/www/ && \
+    rm -r /app/sbpp/*
+fi
+
