@@ -53,7 +53,7 @@ RUN \
   echo "**** cleanup ****" && \
   rm -rf \
     /tmp/* \
-    /root/.cache \
+    /root/.cache
 
 # add local files
 COPY root/ /
